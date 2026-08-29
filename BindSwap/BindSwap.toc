@@ -1,0 +1,9 @@
+## Interface: 120100
+## Title: BindSwap
+## Notes: Save and load keybinding profiles with slash commands.
+## Author: JT
+## Version: 1.0.0
+## SavedVariables: BindSwapDB
+## IconTexture: Interface\Icons\INV_Misc_Key_03
+
+BindSwap.lua
