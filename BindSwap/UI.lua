@@ -318,6 +318,39 @@ local function Build()
 	end)
 	frame.undoButton:SetPoint("TOPLEFT", frame.loadButton, "BOTTOMLEFT", 0, -6)
 
+	-- One-click trackpad setup. Additive, and the snapshot ApplyPreset takes
+	-- means the existing Undo button reverts the whole thing.
+	frame.presetButton = Button(frame, "Laptop / trackpad", 150, function()
+		local applied, err, skipped = ns.ApplyPreset("laptop")
+		if not applied then
+			SetStatus(err, true)
+			return
+		end
+
+		if #applied == 0 then
+			local reason = skipped and skipped[1] and skipped[1].reason or "nothing to change"
+			SetStatus("Already set up (" .. reason .. ").")
+		else
+			nameBox:SetText("laptop")
+			SetStatus(string.format(
+				"Added %d movement bind(s), abilities untouched. Hit Save to keep it as a profile, or Undo to revert.",
+				#applied))
+		end
+		ns.Changed()
+	end)
+	frame.presetButton:SetPoint("LEFT", frame.undoButton, "RIGHT", 6, 0)
+	frame.presetButton:SetScript("OnEnter", function(self)
+		GameTooltip:SetOwner(self, "ANCHOR_TOP")
+		GameTooltip:SetText("Laptop / trackpad movement")
+		GameTooltip:AddLine(
+			"Adds movement binds that work without a mouse: middle-click to run and steer, " ..
+			"a key to lock mouse-look, and auto-run.", 1, 1, 1, true)
+		GameTooltip:AddLine(" ")
+		GameTooltip:AddLine("Only fills in keys that are free. It will never take a key from an ability.", 0.4, 1, 0.6, true)
+		GameTooltip:Show()
+	end)
+	frame.presetButton:SetScript("OnLeave", function() GameTooltip:Hide() end)
+
 	frame.status = Label(frame, "GameFontDisableSmall", "")
 	frame.status:SetPoint("BOTTOMLEFT", frame, "BOTTOMLEFT", 16, 14)
 	frame.status:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -16, 14)

@@ -10,4 +10,5 @@
 ## AddonCompartmentFunc: BindSwap_OnCompartmentClick
 
 Core.lua
+Presets.lua
 UI.lua

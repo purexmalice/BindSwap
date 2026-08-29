@@ -66,6 +66,8 @@ local function CurrentBindingSet()
 	return ACCOUNT_BINDINGS
 end
 
+ns.CurrentBindingSet = CurrentBindingSet
+
 -- Record the keys attached to every binding command. GetBindingKey returns
 -- *all* keys as varargs, not just the two the default UI shows, so commands
 -- with extra binds survive the round trip.
@@ -365,6 +367,7 @@ local function Usage()
 	print("  |cffffff00/kb rename <old> <new>|r - rename a profile")
 	print("  |cffffff00/kb auto <name>|r      - autoload <name> on this character")
 	print("  |cffffff00/kb auto off|r         - stop autoloading on this character")
+	print("  |cffffff00/kb preset laptop|r   - add trackpad-friendly movement binds")
 	print("  |cffffff00/kb undo|r             - restore the binds from before the last load")
 end
 
@@ -457,6 +460,38 @@ function handlers.auto(name)
 		return
 	end
 	Print("|cffffff00%s|r will autoload on %s at login.", set, ns.CharacterKey())
+end
+
+function handlers.preset(name)
+	name = ns.Trim(name):lower()
+
+	if name == "" then
+		Print("presets:")
+		for id, preset in pairs(ns.Presets or {}) do
+			print(string.format("  |cffffff00/kb preset %s|r - %s", id, preset.blurb))
+		end
+		return
+	end
+
+	local applied, err, skipped = ns.ApplyPreset(name)
+	if not applied then
+		Print(err)
+		return
+	end
+
+	if #applied == 0 then
+		Print("nothing to change -- you already have these bound.")
+	else
+		Print("applied |cffffff00%s|r:", ns.Presets[name].name)
+		for _, bind in ipairs(applied) do
+			print(string.format("  |cffffff00%s|r -> %s  (%s)", bind.key, bind.command, bind.why))
+		end
+		Print("|cffffff00/kb save laptop|r to keep it, or |cffffff00/kb undo|r to revert.")
+	end
+
+	for _, skip in ipairs(skipped or {}) do
+		print(string.format("  |cff888888skipped %s: %s|r", skip.command, skip.reason))
+	end
 end
 
 function handlers.undo()
