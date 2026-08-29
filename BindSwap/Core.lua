@@ -484,7 +484,8 @@ function handlers.preset(name)
 	else
 		Print("applied |cffffff00%s|r:", ns.Presets[name].name)
 		for _, bind in ipairs(applied) do
-			print(string.format("  |cffffff00%s|r -> %s  (%s)", bind.key, bind.command, bind.why))
+			local took = bind.displaced and (" |cffff9999(took it from " .. bind.displaced .. ")|r") or ""
+			print(string.format("  |cffffff00%s|r -> %s  (%s)%s", bind.key, bind.command, bind.why, took))
 		end
 		Print("|cffffff00/kb save laptop|r to keep it, or |cffffff00/kb undo|r to revert.")
 	end

@@ -332,9 +332,14 @@ local function Build()
 			SetStatus("Already set up (" .. reason .. ").")
 		else
 			nameBox:SetText("laptop")
+			local took = 0
+			for _, bind in ipairs(applied) do
+				if bind.displaced then took = took + 1 end
+			end
 			SetStatus(string.format(
-				"Added %d movement bind(s), abilities untouched. Hit Save to keep it as a profile, or Undo to revert.",
-				#applied))
+				"Set %d movement bind(s)%s. Hit Save to keep it as a profile, or Undo to put everything back.",
+				#applied,
+				took > 0 and (", " .. took .. " taken from other commands (see chat)") or ""))
 		end
 		ns.Changed()
 	end)
@@ -346,7 +351,7 @@ local function Build()
 			"Adds movement binds that work without a mouse: middle-click to run and steer, " ..
 			"a key to lock mouse-look, and auto-run.", 1, 1, 1, true)
 		GameTooltip:AddLine(" ")
-		GameTooltip:AddLine("Only fills in keys that are free. It will never take a key from an ability.", 0.4, 1, 0.6, true)
+		GameTooltip:AddLine("Takes the keys it needs, even if something else is on them. Undo puts everything back.", 1, 0.7, 0.4, true)
 		GameTooltip:Show()
 	end)
 	frame.presetButton:SetScript("OnLeave", function() GameTooltip:Hide() end)

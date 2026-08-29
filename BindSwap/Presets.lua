@@ -1,9 +1,13 @@
 -- Ready-made binding sets for situations the default layout handles badly.
 --
--- Presets are deliberately ADDITIVE. They only bind movement commands that
--- aren't bound anywhere yet, and only to keys that are currently free. A
--- preset will never take a key away from an ability, because the whole point
--- is to make a laptop playable without dismantling a layout that already works.
+-- A preset OVERWRITES. If a key it needs is already doing something else, it
+-- takes it -- that is the entire point. On a laptop, being able to move and
+-- turn matters more than whatever was on that key, and a preset that politely
+-- declined to bind anything would achieve nothing.
+--
+-- What makes that safe is the snapshot taken before applying: Undo puts the
+-- whole layout back in one click. Everything displaced is reported by name, so
+-- nothing disappears quietly.
 
 local ADDON, ns = ...
 
@@ -70,30 +74,25 @@ function ns.ApplyPreset(id)
 	local applied, skipped = {}, {}
 
 	for _, bind in ipairs(preset.binds) do
-		local existing = { GetBindingKey(bind.command) }
-
 		if not ns.CommandExists(bind.command) then
+			-- The only real reason to skip: the client has never heard of this
+			-- command, usually because the addon providing it isn't loaded.
 			skipped[#skipped + 1] = {
 				command = bind.command,
 				reason = "this client doesn't have that command -- is the addon installed?",
 			}
-
-		elseif #existing > 0 then
-			skipped[#skipped + 1] = {
-				command = bind.command,
-				reason = "already bound to " .. table.concat(existing, ", "),
-			}
-
 		else
-			local owner = KeyOwner(bind.key)
-			if owner then
-				-- Never quietly steal a key that's doing something already.
-				skipped[#skipped + 1] = {
+			-- Note what we're displacing so the player can see the cost.
+			local displaced = KeyOwner(bind.key)
+			if displaced == bind.command then displaced = nil end
+
+			if SetBinding(bind.key, bind.command) then
+				applied[#applied + 1] = {
+					key = bind.key,
 					command = bind.command,
-					reason = bind.key .. " is already used by " .. owner,
+					why = bind.why,
+					displaced = displaced,
 				}
-			elseif SetBinding(bind.key, bind.command) then
-				applied[#applied + 1] = { key = bind.key, command = bind.command, why = bind.why }
 			else
 				skipped[#skipped + 1] = {
 					command = bind.command,
