@@ -90,6 +90,15 @@ needs the laptop profile. Or copy
 `WTF/Account/<ACCOUNT>/SavedVariables/BindSwap.lua` between installs with the
 game closed.
 
+## Status
+
+New addon, built and tested on 12.1.0. If something breaks, please open an issue
+on GitHub rather than guessing — bug reports with the error text get fixed fast.
+
+The binding engine has an automated test suite covering profile round-trips,
+autoload timing, combat deferral and the awkward edge cases, so the core is
+solid. The window has had less mileage.
+
 ## Source
 
-MIT licensed, source at https://github.com/purexmalice/BindSwap
+MIT licensed. Source and issues: https://github.com/purexmalice/BindSwap
