@@ -2,7 +2,7 @@
 ## Title: BindSwap
 ## Notes: Keybinding profiles. Save one per device, load with a click, autoload per character.
 ## Author: JT
-## Version: 2.0.0
+## Version: 2.1.0
 ## SavedVariables: BindSwapDB
 ## SavedVariablesPerCharacter: BindSwapCharDB
 ## IconTexture: Interface\Icons\INV_Misc_Key_03
