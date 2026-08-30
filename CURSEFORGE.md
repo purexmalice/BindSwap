@@ -71,20 +71,24 @@ movement keys at all, so your left hand stays free for abilities:
 | `\` | Auto-run |
 | `=` / `-` | Camera zoom |
 
-**Laptop trackpads need a bit of help.** Move and Steer needs the middle button
-*held down*, and clickpads can't do that on their own:
+Camera zoom moves onto keys because a trackpad gesture usually takes over
+scrolling in game.
 
-- **With a mouse** — nothing extra needed, it just works.
+**With a mouse this just works** — Move and Steer needs the middle button held
+down, and every mouse has one.
+
+**On a laptop trackpad it depends on the hardware:**
+
+- **Mac** — a trackpad has no middle button at all, so it needs a helper.
+  [TrackSteer](https://github.com/purexmalice/TrackSteer/releases) is free and
+  open source: two fingers resting run and steer, pressing down turns on the
+  spot, and two-finger scrolling stays normal in every other app.
 - **Windows laptops with physical trackpad buttons** (ThinkPads and similar) —
-  also fine, they have a real middle button.
-- **Windows clickpads** — three-finger *tap* can be set to middle click in
-  Settings, but a tap is momentary and won't hold, so Move and Steer won't
-  work from the trackpad. Auto-run plus right-click mouselook still gives you
-  hands-free movement.
-- **Mac** — [TrackSteer](https://github.com/purexmalice/TrackSteer/releases) is
-  free and open source, and fills the gap: two fingers resting turns your
-  character, pressing down runs and steers. Two-finger scrolling stays normal in
-  every other app.
+  should work, there's a real middle button.
+- **Windows clickpads** — currently untested. Windows can map a three-finger
+  *tap* to middle click, but a tap is momentary and Move and Steer needs the
+  button held, so it may not work. If you try it, please say what happened —
+  that's the one setup I have no way to test.
 
 Presets **overwrite**. If a key they need is already doing something else, they
 take it — that's the point. Every displaced command is named in chat, and Undo
@@ -101,8 +105,11 @@ game closed.
 
 ## Status
 
-New addon, built and tested on 12.1.0. If something breaks, please open an issue
-on GitHub rather than guessing — bug reports with the error text get fixed fast.
+New addon, built and tested on 12.1.0 on macOS. The addon itself is pure Lua
+with nothing platform-specific in it, so Windows behaviour should be identical —
+but "should be" isn't "is", and Windows testing is still in progress. If
+something breaks, please open an issue on GitHub rather than guessing; bug
+reports with the error text get fixed fast.
 
 The binding engine has an automated test suite covering profile round-trips,
 autoload timing, combat deferral and the awkward edge cases, so the core is
