@@ -85,10 +85,22 @@ down, and every mouse has one.
   spot, and two-finger scrolling stays normal in every other app.
 - **Windows laptops with physical trackpad buttons** (ThinkPads and similar) —
   should work, there's a real middle button.
-- **Windows clickpads** — currently untested. Windows can map a three-finger
-  *tap* to middle click, but a tap is momentary and Move and Steer needs the
-  button held, so it may not work. If you try it, please say what happened —
-  that's the one setup I have no way to test.
+- **Windows clickpads** — currently untested, and I'd genuinely like to know.
+
+### Windows laptop users — one question, if you don't mind
+
+Move and Steer needs the middle mouse button **held down**, not clicked. Windows
+lets you map a three-finger *tap* to middle click, but a tap is momentary, so it
+may not hold.
+
+If you play on a Windows laptop trackpad, please leave a comment saying:
+
+- What laptop, and whether the trackpad has separate physical buttons
+- Whether holding the gesture keeps you running, or stops immediately
+
+I develop on a Mac and have no way to test this. If Windows trackpads *can* hold
+it, the preset works there too and this warning comes out. If they can't, it's
+worth building a Windows helper — and knowing that is worth a lot.
 
 Presets **overwrite**. If a key they need is already doing something else, they
 take it — that's the point. Every displaced command is named in chat, and Undo
