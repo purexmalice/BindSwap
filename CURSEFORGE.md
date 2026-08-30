@@ -71,11 +71,20 @@ movement keys at all, so your left hand stays free for abilities:
 | `\` | Auto-run |
 | `=` / `-` | Camera zoom |
 
-**Mac users:** a trackpad has no middle button, so the gesture needs a small
-helper. [TrackSteer](https://github.com/purexmalice/TrackSteer/releases) is free
-and open source, and turns a two-finger drag into a held middle mouse button
-inside WoW only — two-finger scrolling stays normal everywhere else. Most
-Windows laptop trackpads already have a middle click and need nothing extra.
+**Laptop trackpads need a bit of help.** Move and Steer needs the middle button
+*held down*, and clickpads can't do that on their own:
+
+- **With a mouse** — nothing extra needed, it just works.
+- **Windows laptops with physical trackpad buttons** (ThinkPads and similar) —
+  also fine, they have a real middle button.
+- **Windows clickpads** — three-finger *tap* can be set to middle click in
+  Settings, but a tap is momentary and won't hold, so Move and Steer won't
+  work from the trackpad. Auto-run plus right-click mouselook still gives you
+  hands-free movement.
+- **Mac** — [TrackSteer](https://github.com/purexmalice/TrackSteer/releases) is
+  free and open source, and fills the gap: two fingers resting turns your
+  character, pressing down runs and steers. Two-finger scrolling stays normal in
+  every other app.
 
 Presets **overwrite**. If a key they need is already doing something else, they
 take it — that's the point. Every displaced command is named in chat, and Undo
