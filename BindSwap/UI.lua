@@ -359,6 +359,12 @@ local function Build()
 		end
 		GameTooltip:AddLine(" ")
 		GameTooltip:AddLine("Takes the keys it needs. Undo puts everything back.", 1, 0.7, 0.4, true)
+		if type(IsMacClient) == "function" and IsMacClient() then
+			GameTooltip:AddLine(" ")
+			GameTooltip:AddLine(
+				"On a Mac trackpad, Move and Steer needs a free helper: github.com/purexmalice/TrackSteer",
+				0.4, 1, 0.6, true)
+		end
 		GameTooltip:Show()
 	end
 

@@ -104,6 +104,20 @@ function ns.ApplyPreset(id)
 		SaveBindings(ns.CurrentBindingSet())
 	end
 
+	-- A Mac trackpad has no middle button at all, so Move and Steer silently
+	-- does nothing without a helper. Say so here rather than let someone
+	-- conclude the preset is broken.
+	local boundMiddle = false
+	for _, bind in ipairs(applied) do
+		if bind.key == "BUTTON3" then boundMiddle = true end
+	end
+
+	if boundMiddle and type(IsMacClient) == "function" and IsMacClient() then
+		ns.Print("on a Mac trackpad, |cffffff00Move and Steer|r needs a middle button, which trackpads don't have.")
+		print("  Free helper: |cff33ff99github.com/purexmalice/TrackSteer|r")
+		print("  |cff888888Not needed if you play with a mouse.|r")
+	end
+
 	ns.Changed()
 	return applied, nil, skipped
 end
