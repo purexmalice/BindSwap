@@ -11,4 +11,5 @@
 
 Core.lua
 Presets.lua
+TrackSteer.lua
 UI.lua
