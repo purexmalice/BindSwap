@@ -4,7 +4,7 @@
 
 local ADDON, ns = ...
 
-local WIDTH, HEIGHT = 400, 470
+local WIDTH, HEIGHT = 440, 470
 local ROW_HEIGHT = 28
 
 local window        -- the frame, once built
@@ -318,10 +318,10 @@ local function Build()
 	end)
 	frame.undoButton:SetPoint("TOPLEFT", frame.loadButton, "BOTTOMLEFT", 0, -6)
 
-	-- One-click trackpad setup. Additive, and the snapshot ApplyPreset takes
-	-- means the existing Undo button reverts the whole thing.
-	frame.presetButton = Button(frame, "Laptop / trackpad", 150, function()
-		local applied, err, skipped = ns.ApplyPreset("laptop")
+	-- One-click trackpad setups. Additive-free: they take the keys they need,
+	-- and the snapshot ApplyPreset takes means Undo reverts the lot.
+	local function ApplyPreset(id)
+		local applied, err, skipped = ns.ApplyPreset(id)
 		if not applied then
 			SetStatus(err, true)
 			return
@@ -331,30 +331,41 @@ local function Build()
 			local reason = skipped and skipped[1] and skipped[1].reason or "nothing to change"
 			SetStatus("Already set up (" .. reason .. ").")
 		else
-			nameBox:SetText("laptop")
 			local took = 0
 			for _, bind in ipairs(applied) do
 				if bind.displaced then took = took + 1 end
 			end
+			nameBox:SetText(ns.Presets[id].name)
 			SetStatus(string.format(
-				"Set %d movement bind(s)%s. Hit Save to keep it as a profile, or Undo to put everything back.",
+				"Set %d bind(s)%s. Save to keep it as a profile, or Undo to put everything back.",
 				#applied,
 				took > 0 and (", " .. took .. " taken from other commands (see chat)") or ""))
 		end
 		ns.Changed()
-	end)
-	frame.presetButton:SetPoint("LEFT", frame.undoButton, "RIGHT", 6, 0)
-	frame.presetButton:SetScript("OnEnter", function(self)
+	end
+
+	local function PresetTooltip(self, id)
 		GameTooltip:SetOwner(self, "ANCHOR_TOP")
-		GameTooltip:SetText("Laptop / trackpad movement")
-		GameTooltip:AddLine(
-			"Adds movement binds that work without a mouse: middle-click to run and steer, " ..
-			"a key to lock mouse-look, and auto-run.", 1, 1, 1, true)
+		GameTooltip:SetText(ns.Presets[id].name)
+		GameTooltip:AddLine(ns.Presets[id].blurb, 1, 1, 1, true)
 		GameTooltip:AddLine(" ")
-		GameTooltip:AddLine("Takes the keys it needs, even if something else is on them. Undo puts everything back.", 1, 0.7, 0.4, true)
+		for _, bind in ipairs(ns.Presets[id].binds) do
+			GameTooltip:AddLine(bind.key .. "  ->  " .. bind.why, 0.7, 0.7, 0.75, true)
+		end
+		GameTooltip:AddLine(" ")
+		GameTooltip:AddLine("Takes the keys it needs. Undo puts everything back.", 1, 0.7, 0.4, true)
 		GameTooltip:Show()
-	end)
-	frame.presetButton:SetScript("OnLeave", function() GameTooltip:Hide() end)
+	end
+
+	frame.preset2 = Button(frame, "Trackpad 2-finger", 118, function() ApplyPreset("laptop2") end)
+	frame.preset2:SetPoint("LEFT", frame.undoButton, "RIGHT", 6, 0)
+	frame.preset2:SetScript("OnEnter", function(self) PresetTooltip(self, "laptop2") end)
+	frame.preset2:SetScript("OnLeave", function() GameTooltip:Hide() end)
+
+	frame.preset3 = Button(frame, "Trackpad 3-finger", 118, function() ApplyPreset("laptop3") end)
+	frame.preset3:SetPoint("LEFT", frame.preset2, "RIGHT", 6, 0)
+	frame.preset3:SetScript("OnEnter", function(self) PresetTooltip(self, "laptop3") end)
+	frame.preset3:SetScript("OnLeave", function() GameTooltip:Hide() end)
 
 	frame.status = Label(frame, "GameFontDisableSmall", "")
 	frame.status:SetPoint("BOTTOMLEFT", frame, "BOTTOMLEFT", 16, 14)
