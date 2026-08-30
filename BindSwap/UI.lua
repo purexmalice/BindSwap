@@ -362,7 +362,7 @@ local function Build()
 		if type(IsMacClient) == "function" and IsMacClient() then
 			GameTooltip:AddLine(" ")
 			GameTooltip:AddLine(
-				"On a Mac trackpad, Move and Steer needs a free helper: github.com/purexmalice/TrackSteer",
+				"On a Mac trackpad, Move and Steer needs a free helper: github.com/purexmalice/TrackSteer/releases",
 				0.4, 1, 0.6, true)
 		end
 		GameTooltip:Show()

@@ -114,7 +114,7 @@ function ns.ApplyPreset(id)
 
 	if boundMiddle and type(IsMacClient) == "function" and IsMacClient() then
 		ns.Print("on a Mac trackpad, |cffffff00Move and Steer|r needs a middle button, which trackpads don't have.")
-		print("  Free helper: |cff33ff99github.com/purexmalice/TrackSteer|r")
+		print("  Free helper: |cff33ff99github.com/purexmalice/TrackSteer/releases|r")
 		print("  |cff888888Not needed if you play with a mouse.|r")
 	end
 
