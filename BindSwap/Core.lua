@@ -368,8 +368,6 @@ local function Usage()
 	print("  |cffffff00/kb auto <name>|r      - autoload <name> on this character")
 	print("  |cffffff00/kb auto off|r         - stop autoloading on this character")
 	print("  |cffffff00/kb preset laptop|r   - add trackpad-friendly movement binds")
-	print("  |cffffff00/kb gesture rest|press|r - how the trackpad drag triggers (macOS)")
-	print("  |cffffff00/kb speed <name>|r     - turn speed: slow, normal, fast, faster")
 	print("  |cffffff00/kb undo|r             - restore the binds from before the last load")
 end
 
@@ -495,31 +493,6 @@ function handlers.preset(name)
 	for _, skip in ipairs(skipped or {}) do
 		print(string.format("  |cff888888skipped %s: %s|r", skip.command, skip.reason))
 	end
-end
-
--- Trackpad helper settings. These reach TrackSteer through SavedVariables,
--- which the client only writes on /reload or logout -- hence the reminder.
-function handlers.gesture(mode)
-	if ns.Trim(mode) == "" then
-		Print("gesture is |cffffff00%s|r. Use |cffffff00/kb gesture rest|r or |cffffff00press|r.",
-			ns.TrackSteer().trigger)
-		return
-	end
-
-	local set, err = ns.SetGesture(mode)
-	if not set then Print(err) return end
-	Print("gesture: |cffffff00%s|r. |cffffff00/reload|r to apply it.", set)
-end
-
-function handlers.speed(name)
-	if ns.Trim(name) == "" then
-		Print("turn speed is |cffffff00%s|r. Options: slow, normal, fast, faster.", ns.SpeedName())
-		return
-	end
-
-	local set, err = ns.SetSpeed(name)
-	if not set then Print(err) return end
-	Print("turn speed: |cffffff00%s|r. |cffffff00/reload|r to apply it.", set)
 end
 
 function handlers.undo()
