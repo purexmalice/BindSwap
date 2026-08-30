@@ -11,27 +11,14 @@
 
 local ADDON, ns = ...
 
--- The WoW bindings are the same whichever gesture drives the middle button --
--- the finger count is decided by the Mac helper app, not here. What differs is
--- that a two-finger drag consumes two-finger scroll inside the game, so camera
--- zoom has to move onto keys.
+-- The middle button is driven by a trackpad gesture supplied outside the game
+-- (TrackSteer on macOS). That gesture consumes two-finger scroll inside WoW, so
+-- camera zoom moves onto keys here. Three fingers is deliberately left alone --
+-- macOS uses it for switching Spaces, above the game.
 ns.Presets = {
-	laptop3 = {
-		name = "Trackpad (3-finger)",
-		blurb = "Move and steer on a three-finger drag. Scroll zoom still works.",
-		binds = {
-			{ key = "BUTTON3", command = "MOVEANDSTEER",
-			  why = "middle mouse = run and steer, held on a three-finger drag" },
-			{ key = "`", command = "MOUSETURN_TOGGLE",
-			  why = "lock mouse-look so the trackpad turns you (needs MouseTurn)" },
-			{ key = "\\", command = "TOGGLEAUTORUN",
-			  why = "auto-run, so nothing is held to move forward" },
-		},
-	},
-
-	laptop2 = {
-		name = "Trackpad (2-finger)",
-		blurb = "Move and steer on a two-finger drag. Puts camera zoom on keys.",
+	laptop = {
+		name = "Trackpad",
+		blurb = "Move and steer on a two-finger drag, with camera zoom on keys.",
 		binds = {
 			{ key = "BUTTON3", command = "MOVEANDSTEER",
 			  why = "middle mouse = run and steer, held on a two-finger drag" },

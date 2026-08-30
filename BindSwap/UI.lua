@@ -4,7 +4,7 @@
 
 local ADDON, ns = ...
 
-local WIDTH, HEIGHT = 440, 470
+local WIDTH, HEIGHT = 400, 470
 local ROW_HEIGHT = 28
 
 local window        -- the frame, once built
@@ -357,15 +357,10 @@ local function Build()
 		GameTooltip:Show()
 	end
 
-	frame.preset2 = Button(frame, "Trackpad 2-finger", 118, function() ApplyPreset("laptop2") end)
-	frame.preset2:SetPoint("LEFT", frame.undoButton, "RIGHT", 6, 0)
-	frame.preset2:SetScript("OnEnter", function(self) PresetTooltip(self, "laptop2") end)
-	frame.preset2:SetScript("OnLeave", function() GameTooltip:Hide() end)
-
-	frame.preset3 = Button(frame, "Trackpad 3-finger", 118, function() ApplyPreset("laptop3") end)
-	frame.preset3:SetPoint("LEFT", frame.preset2, "RIGHT", 6, 0)
-	frame.preset3:SetScript("OnEnter", function(self) PresetTooltip(self, "laptop3") end)
-	frame.preset3:SetScript("OnLeave", function() GameTooltip:Hide() end)
+	frame.preset = Button(frame, "Trackpad setup", 150, function() ApplyPreset("laptop") end)
+	frame.preset:SetPoint("LEFT", frame.undoButton, "RIGHT", 6, 0)
+	frame.preset:SetScript("OnEnter", function(self) PresetTooltip(self, "laptop") end)
+	frame.preset:SetScript("OnLeave", function() GameTooltip:Hide() end)
 
 	frame.status = Label(frame, "GameFontDisableSmall", "")
 	frame.status:SetPoint("BOTTOMLEFT", frame, "BOTTOMLEFT", 16, 14)
