@@ -256,7 +256,12 @@ local function Build()
 		end
 		local name = ns.Trim(nameBox:GetText())
 		selectedKey = ns.Key(name)
+
+		-- Empty the box on success. Leaving the name sitting there reads as if
+		-- the save is still pending; the new row in the list is the confirmation.
+		nameBox:SetText("")
 		nameBox:ClearFocus()
+
 		SetStatus(string.format("%s %s (%d keys).", overwrote and "Overwrote" or "Saved", name, count))
 	end
 
