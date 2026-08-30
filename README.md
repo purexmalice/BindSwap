@@ -64,6 +64,30 @@ Everything the window does, in case you prefer typing:
 
 `/bindswap` is a longer alias if `/kb` collides with another addon.
 
+## Trackpad setup
+
+If you play on a laptop, the **Trackpad setup** button binds a movement scheme
+that needs no movement keys at all, leaving your left hand free for abilities:
+
+| Key | Does |
+|---|---|
+| Middle mouse | Run and steer (a two-finger drag, via a trackpad helper) |
+| `\` | Auto-run |
+| `=` / `-` | Camera zoom |
+
+Camera zoom moves onto keys because the two-finger drag consumes two-finger
+scroll inside the game.
+
+Presets **overwrite**. If a key they need is already doing something else, they
+take it -- that is the point, since a preset that politely declined would
+achieve nothing. Every displaced command is named in chat, and **Undo** puts the
+whole layout back in one click.
+
+On macOS the middle-button gesture is supplied by
+[TrackSteer](../tracksteer), a small helper that turns a two-finger drag into a
+held middle mouse button inside WoW only. Most Windows laptop trackpads have a
+middle click already and need nothing extra.
+
 ## Behaviour worth knowing
 
 - **A load replaces everything.** Every key is unbound first, then the profile is

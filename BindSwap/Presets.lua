@@ -22,8 +22,6 @@ ns.Presets = {
 		binds = {
 			{ key = "BUTTON3", command = "MOVEANDSTEER",
 			  why = "middle mouse = run and steer, held on a two-finger drag" },
-			{ key = "`", command = "MOUSETURN_TOGGLE",
-			  why = "lock mouse-look so the trackpad turns you (needs MouseTurn)" },
 			{ key = "\\", command = "TOGGLEAUTORUN",
 			  why = "auto-run, so nothing is held to move forward" },
 			-- Two-finger drag eats two-finger scroll, so zoom needs somewhere else.
