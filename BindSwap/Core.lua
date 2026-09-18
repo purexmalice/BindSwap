@@ -57,13 +57,21 @@ end
 -- Mirror whichever set the player is on so a swap doesn't silently move their
 -- bindings between the two.
 local function CurrentBindingSet()
+	-- ACCOUNT_BINDINGS and CHARACTER_BINDINGS are retail globals and simply do
+	-- not exist on a Classic-based client, so the constants are pinned to their
+	-- literal values. Relying on the globals meant SaveBindings received nil and
+	-- threw "Usage: SaveBindings(1|2)" the first time a preset was applied in
+	-- Forever.
+	local account, character = 1, 2
+
 	if type(GetCurrentBindingSet) == "function" then
-		local set = GetCurrentBindingSet()
-		if set == ACCOUNT_BINDINGS or set == CHARACTER_BINDINGS then
+		local ok, set = pcall(GetCurrentBindingSet)
+		if ok and (set == account or set == character) then
 			return set
 		end
 	end
-	return ACCOUNT_BINDINGS
+
+	return account
 end
 
 ns.CurrentBindingSet = CurrentBindingSet

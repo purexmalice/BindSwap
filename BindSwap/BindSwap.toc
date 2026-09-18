@@ -1,8 +1,8 @@
-## Interface: 120100
+## Interface: 120100, 16001
 ## Title: BindSwap
 ## Notes: Keybinding profiles. Save one per device, load with a click, autoload per character.
 ## Author: purexmalice
-## Version: 2.1.1
+## Version: 2.1.2
 ## SavedVariables: BindSwapDB
 ## SavedVariablesPerCharacter: BindSwapCharDB
 ## IconTexture: Interface\Icons\INV_Misc_Key_03

@@ -243,5 +243,25 @@ check("rename with no args does not error", pcall(kb, "rename"), true)
 check("auto with an unknown profile does not error", pcall(kb, "auto nope"), true)
 check("list does not error", pcall(kb, "list"), true)
 
+--------------------------------------------------------------------------------
+print("-- classic clients lack the retail binding-set globals --")
+
+-- Forever and other Classic-based clients do not define these. Relying on them
+-- meant SaveBindings got nil and threw "Usage: SaveBindings(1|2)" the first
+-- time a preset was applied.
+local savedAccount, savedCharacter = ACCOUNT_BINDINGS, CHARACTER_BINDINGS
+ACCOUNT_BINDINGS, CHARACTER_BINDINGS = nil, nil
+GetCurrentBindingSet = nil
+
+check("a binding set is still resolved with no globals", ns.CurrentBindingSet(), 1)
+check("saving works on a client without them", (function()
+    setBindings(DESKTOP)
+    local ok = pcall(ns.Apply, ns.Snapshot())
+    return ok
+end)(), true)
+
+ACCOUNT_BINDINGS, CHARACTER_BINDINGS = savedAccount, savedCharacter
+GetCurrentBindingSet = function() return ACCOUNT_BINDINGS end
+
 print(("\n=== %d passed, %d failed ===\n"):format(pass, fail))
 os.exit(fail == 0 and 0 or 1)
